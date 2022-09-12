@@ -1,0 +1,9 @@
+title New note single page app
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: 201 Created
+note over browser:
+the new note is effectively created before this response is sent back and it's 
+returned in the body of the message, it's location being the content
+of the Location header
+end note
