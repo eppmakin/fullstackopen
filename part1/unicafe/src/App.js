@@ -7,16 +7,13 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
-const Header = (props) => {
-  return (
-    <div>
-      <h1>{props.header}</h1>
-    </div>
-  )
-}
-
-
+  const Header = (props) => {
+    return (
+      <div>
+        <h1>{props.header}</h1>
+      </div> 
+    )
+  }
   return (
     <><div>
       <Header header={header} />
@@ -37,6 +34,12 @@ const Header = (props) => {
       neutral {neutral}
       <br />
       bad {bad}
+      <br />
+      all {good+neutral+bad}
+      <br />
+      average {(good+neutral*0+bad*-1)/(good+neutral+bad)}
+      <br />
+      positive {good/(good+neutral+bad)*100} %
     </div></>
   )
 }
