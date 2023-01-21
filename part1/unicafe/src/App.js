@@ -48,6 +48,8 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   // tracking previously selected anecdote
   const [previousSelected, setPreviousSelected] = useState(null)
+  // tracking points
+  const [points, setPoints] = useState(Array(anecdotes.length).fill(0))
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -79,11 +81,25 @@ const App = () => {
     setPreviousSelected(i)
     setSelected(i)
   }
+  //voting for displayed anecdote
+  const handleVote = () => {
+    // creating a copy of the points array
+    const copy = [...points]
+    // increasing the vote
+    copy[selected] += 1
+    // updating the points array
+    setPoints(copy)
+  }
   return (
     <div>
       {anecdotes[selected]}
       <br />
+      has {points[selected]} votes
+      <br />
+      <Button handleClick={handleVote} text = "vote"/>
       <Button handleClick={handleAnecdote} text="next anecdote"/>
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[points.indexOf(Math.max(...points))]}
       <h1>give feedback</h1>
       <Button handleClick={handleGoodClick}    text="good"   />
       <Button handleClick={handleNeutralClick} text="neutral"/>
