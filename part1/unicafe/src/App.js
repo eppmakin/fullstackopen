@@ -3,21 +3,30 @@ import { useState } from 'react'
 const Statistics = (props) => {
   // destructure the values for less typing
   const { good, neutral, bad } = props;
+  const all = good + neutral + bad
+  const average = (good - bad) / all // same as before just written better
+  const positive = (good / all) * 100
   return (    
+    <>
     <div>
-      good {good}
-      <br />
-      neutral {neutral}
-      <br />
-      bad {bad}
-      <br />
-      all {good + neutral + bad}
-      <br />
-      average {(good + neutral * 0 + bad * -1) / (good + neutral + bad)}
-      <br />
-      positive {good / (good + neutral + bad) * 100} %
+      <StatisticLine text="good"     value = {good}     />
+      <StatisticLine text="neutral"  value = {neutral}  />
+      <StatisticLine text="bad"      value = {bad}      />
+      <StatisticLine text="average"  value = {average}  />
+      <StatisticLine text="positive" value = {positive} />
     </div>
+    </>
   )
+}
+// Displaying a single statistics eg. the average score
+const StatisticLine = ({text, value}) => {
+  return (
+    <div>{text} {value}</div>
+  )
+}
+// Defining the buttons used for submitting feedback
+const Button = ({handleClick, text}) => {
+  return <button onClick={handleClick}>{text}</button>
 }
 // The state of the application remains in the App root component.
 const App = () => {
@@ -45,14 +54,15 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGoodClick}>good</button>
-      <button onClick={handleNeutralClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button handleClick={handleGoodClick}    text="good"   />
+      <Button handleClick={handleNeutralClick} text="neutral"/>
+      <Button handleClick={handleBadClick}     text="bad"    />
       <h1>statistics</h1>
-      {feedbackSubmitted ? <Statistics good={good} neutral={neutral} bad={bad}/> : <div>No feedback given</div>}
+      {feedbackSubmitted ? 
+      <Statistics good={good} neutral={neutral} bad={bad}/>
+       : 
+      <div>No feedback given</div>}
     </div>
-    //TODO: continue from part 1.10 next time
   )
 }
-
 export default App
